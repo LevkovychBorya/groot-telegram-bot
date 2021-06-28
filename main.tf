@@ -14,7 +14,7 @@ module "lambda" {
   }
   tags = {
     "Owner" = "blevk"
-  }
+  } 
   policy = <<EOF
 {
   "Version": "2012-10-17",
