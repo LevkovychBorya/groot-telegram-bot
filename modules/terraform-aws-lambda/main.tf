@@ -1,5 +1,5 @@
 terraform {
-  required_version = "> 1.0.0"
+  required_version = ">= 1.0.0"
 }
 
 resource "aws_iam_role" "this" {
@@ -24,7 +24,7 @@ EOF
 
 resource "aws_lambda_function" "this" {
   filename      = var.filename
-  function_name = format("%s-%s-%s-lambda-function", var.client_prefix, var.env_suffix, var.project)
+  function_name = format("%s-%s-%s-lambda-function", var.client, var.env, var.project)
   role          = aws_iam_role.this.arn
   handler       = var.handler
   timeout       = var.timeout
@@ -41,7 +41,7 @@ resource "aws_lambda_function" "this" {
 }
 
 resource "aws_iam_policy" "this" {
-  name = format("%s-%s-%s-lambda-policy", var.client_prefix, var.env_suffix, var.project)
+  name = format("%s-%s-%s-lambda-policy", var.client, var.env, var.project)
 
   policy = var.policy
 }
