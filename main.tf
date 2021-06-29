@@ -15,12 +15,12 @@ terraform {
 
 # Infrastructure as a code
 module "lambda" {
-  source = "./modules/terraform-aws-lambda"
-  client = "blevk"
-  env    = "prod"
-  project = "grootbot"
-  filename = "lambda_function.zip"
-  timeout = 5
+  source    = "./modules/terraform-aws-lambda"
+  client    = "blevk"
+  env       = "prod"
+  project   = "grootbot"
+  filename  = "lambda_function.zip"
+  timeout   = 5
   variables = {
     TELEGRAM_TOKEN = "token"
   }
@@ -39,4 +39,15 @@ module "lambda" {
   ]
 }
 EOF
+}
+
+module "api_gateway" {
+  source     = "./modules/terraform-aws-api-gateway"
+  client     = "blevk"
+  env        = "prod"
+  project    = "grootbot"
+  path       = "trigger_lambda"
+  method     = "ANY"
+  type       = "AWS_PROXY"
+  lambda_arn = module.lambda.lambda_arn
 }
