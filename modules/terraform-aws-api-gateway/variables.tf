@@ -34,7 +34,7 @@ variable "authorization" {
 variable "integration_method" {
   type    = string
   default = "POST"
-  description = "The HTTP method (GET, POST, PUT, DELETE, HEAD, OPTION, ANY)"
+  description = "The HTTP method (GET, POST, PUT, DELETE, HEAD, OPTION, ANY) Lambda function can only be invoked via POST."
 }
 variable "type" {
   type    = string
@@ -45,4 +45,9 @@ variable "lambda_arn" {
   type    = string
   default = "arn"
   description = "The input's URI. For AWS integrations, the URI should be in form of the arn"
+}
+variable "stage_name" {
+  type    = string
+  default = "V1"
+  description = "Name of the stage to create with this deployment."
 }

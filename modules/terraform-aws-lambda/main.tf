@@ -50,3 +50,11 @@ resource "aws_iam_role_policy_attachment" "this" {
   role       = aws_iam_role.this.name
   policy_arn = aws_iam_policy.this.arn
 }
+
+resource "aws_lambda_permission" "this" {
+  statement_id  = var.statement_id
+  action        = var.action
+  function_name = aws_lambda_function.this.function_name
+  principal     = var.principal
+  source_arn    = var.source_arn
+}

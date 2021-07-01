@@ -15,25 +15,27 @@ terraform {
 
 # Infrastructure as a code
 module "lambda" {
-  source    = "./modules/terraform-aws-lambda"
-  client    = "blevk"
-  env       = "prod"
-  project   = "grootbot"
-  filename  = "lambda_function.zip"
-  timeout   = 5
-  variables = {
+  source     = "./modules/terraform-aws-lambda"
+  client     = "blevk"
+  env        = "prod"
+  project    = "grootbot"
+  filename   = "lambda_function.zip"
+  timeout    = 15
+  source_arn = module.api_gateway.api_gateway_execution_arn
+  variables  = {
     TELEGRAM_TOKEN = "token"
   }
   tags = {
-    "Owner" = "blevk"
+    "Owner"  = "blevk"
   } 
   policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Action": "lambda:*",
-      "Effect": "Deny",
+      "Sid": "Stmt1625173905105",
+      "Action": "*",
+      "Effect": "Allow",
       "Resource": "*"
     }
   ]
@@ -46,7 +48,7 @@ module "api_gateway" {
   client     = "blevk"
   env        = "prod"
   project    = "grootbot"
-  path       = "trigger_lambda"
+  path       = "lambda"
   method     = "ANY"
   type       = "AWS_PROXY"
   lambda_arn = module.lambda.lambda_arn

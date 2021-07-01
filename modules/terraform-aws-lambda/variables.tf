@@ -23,7 +23,7 @@ variable "filename" {
 }
 variable "handler" {
   type    = string
-  default = "lambda_handler"
+  default = "lambda_function.lambda_handler"
   description = "Function entrypoint in your code."
 }
 variable "timeout" {
@@ -65,4 +65,24 @@ variable "policy" {
 }
 EOF
     description = "The policy document. This is a JSON formatted string."
+}
+variable "statement_id" {
+  type    = string
+  default = "AllowExecutionFromAPIGateway"
+  description = "A unique statement identifier."
+}
+variable "action" {
+  type    = string
+  default = "lambda:InvokeFunction"
+  description = "The AWS Lambda action you want to allow in this statement."
+}
+variable "principal" {
+  type    = string
+  default = "apigateway.amazonaws.com"
+  description = "The principal who is getting this permission."
+}
+variable "source_arn" {
+  type    = string
+  default = "arn"
+  description = "When the principal is an AWS service, the ARN of the specific resource within that service to grant permission to."
 }
