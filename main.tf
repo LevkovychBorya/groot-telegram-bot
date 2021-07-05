@@ -14,7 +14,7 @@ terraform {
 }
 
 # Infrastructure as a code
-module "lambda" {
+module "aws_lambda" {
   source     = "./modules/terraform-aws-lambda"
   client     = "blevk"
   env        = "prod"
@@ -22,7 +22,7 @@ module "lambda" {
 
   filename   = "lambda_function.zip"
   timeout    = 15
-  source_arn = module.api_gateway.api_gateway_execution_arn
+  source_arn = module.aws_api_gateway.api_gateway_execution_arn
   
   variables  = {
     TELEGRAM_TOKEN = "token"
@@ -47,7 +47,7 @@ module "lambda" {
 EOF
 }
 
-module "api_gateway" {
+module "aws_api_gateway" {
   source     = "./modules/terraform-aws-api-gateway"
   client     = "blevk"
   env        = "prod"
@@ -56,10 +56,10 @@ module "api_gateway" {
   path       = "lambda"
   method     = "ANY"
   type       = "AWS_PROXY"
-  lambda_arn = module.lambda.lambda_arn
+  lambda_arn = module.aws_lambda.lambda_arn
 }
 
-module "dynamodb" {
+module "aws_dynamodb" {
   source     = "./modules/terraform-aws-dynamodb"
   client     = "blevk"
   env        = "prod"
@@ -104,8 +104,8 @@ module "aws_iot" {
 
   description_rule = "Save data from sensors to DynamoDB"
   sql              = "SELECT *, trunc((timestamp() / 1E3), 0) as Timestamp FROM 'grootbot/sensors'"
-  table_name       = module.dynamodb.table_name
-  table_arn        = module.dynamodb.dynamodb_arn
+  table_name       = module.aws_dynamodb.table_name
+  table_arn        = module.aws_dynamodb.dynamodb_arn
   certificate_path = "./certificate/"
 
   attributes = {
@@ -124,4 +124,10 @@ module "aws_iot" {
       },
     ]
   })
+}
+
+resource "null_resource" "this" {
+  provisioner "local-exec" {
+    command = "curl --silent https://api.telegram.org/bot${var.token}/setWebhook?url=${module.aws_api_gateway.invoke_url}"
+  }
 }

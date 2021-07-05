@@ -94,3 +94,8 @@ resource "local_file" "public_key" {
     content     = aws_iot_certificate.this.public_key
     filename    = "${var.certificate_path}/public.key"
 }
+
+resource "local_file" "endpoint" {
+    content     = data.aws_iot_endpoint.this.endpoint_address
+    filename    = "${var.certificate_path}/endpoint.txt"
+}
