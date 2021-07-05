@@ -95,3 +95,33 @@ module "dynamodb" {
     "Owner"  = "blevk"
   } 
 }
+
+module "aws_iot" {
+  source     = "./modules/terraform-aws-iot"
+  client     = "blevk"
+  env        = "prod"
+  project    = "grootbot"
+
+  description_rule = "Save data from sensors to DynamoDB"
+  sql              = "SELECT *, trunc((timestamp() / 1E3), 0) as Timestamp FROM 'grootbot/sensors'"
+  table_name       = module.dynamodb.table_name
+  table_arn        = module.dynamodb.dynamodb_arn
+  certificate_path = "./certificate/"
+
+  attributes = {
+    Owner = "blevk"
+  }
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = [
+          "iot:*",
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+    ]
+  })
+}
