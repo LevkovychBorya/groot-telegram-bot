@@ -25,7 +25,12 @@ module "aws_lambda" {
   source_arn = module.aws_api_gateway.api_gateway_execution_arn
   
   variables  = {
-    TELEGRAM_TOKEN = "token"
+    telegram_token = "${data.aws_secretsmanager_secret_version.token.secret_string}"
+    table_name     = "${module.aws_dynamodb.table_name}"
+    thing_name     = "${module.aws_iot.thing_name}"
+    shadow_name    = "GrootShadow"
+    serial_number  = "10000000cc67568b"
+    authorisedid   = "['380902776', '390672933']"
   }
 
   tags = {
@@ -80,16 +85,6 @@ module "aws_dynamodb" {
       type = "N"
     }
   ]
-
-  #Mock data:
-  /*{
-  "Humidity": 40,
-  "Light": 50,
-  "Moisture": 0,
-  "SerialNumber": "10000000cc67568b",
-  "Temperature": 22,
-  "Timestamp": 1622628889
-  }*/
   
   tags = {
     "Owner"  = "blevk"
@@ -106,7 +101,7 @@ module "aws_iot" {
   sql              = "SELECT *, trunc((timestamp() / 1E3), 0) as Timestamp FROM 'grootbot/sensors'"
   table_name       = module.aws_dynamodb.table_name
   table_arn        = module.aws_dynamodb.dynamodb_arn
-  certificate_path = "./certificate/"
+  certificate_path = "./certificate"
 
   attributes = {
     Owner = "blevk"
@@ -126,8 +121,10 @@ module "aws_iot" {
   })
 }
 
+# Set webhook for the bot. Whenever there is an update for the bot, it will send an HTTPS POST request to the specified url.
 resource "null_resource" "this" {
   provisioner "local-exec" {
-    command = "curl --silent https://api.telegram.org/bot${var.token}/setWebhook?url=${module.aws_api_gateway.invoke_url}"
+    command = "curl --silent https://api.telegram.org/bot${data.aws_secretsmanager_secret_version.token.secret_string}/setWebhook?url=${module.aws_api_gateway.invoke_url}"
   }
 }
+

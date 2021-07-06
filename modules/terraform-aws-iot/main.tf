@@ -82,20 +82,26 @@ EOF
 
 resource "local_file" "certificate" {
     content     = aws_iot_certificate.this.certificate_pem
-    filename    = "${var.certificate_path}/certificate.pem"
+    filename    = "${var.certificate_path}/certificate.pem.crt"
 }
 
 resource "local_file" "private_key" {
     content     = aws_iot_certificate.this.private_key
-    filename    = "${var.certificate_path}/private.key"
+    filename    = "${var.certificate_path}/private.pem.key"
 }
 
 resource "local_file" "public_key" {
     content     = aws_iot_certificate.this.public_key
-    filename    = "${var.certificate_path}/public.key"
+    filename    = "${var.certificate_path}/public.pem.key"
 }
 
 resource "local_file" "endpoint" {
     content     = data.aws_iot_endpoint.this.endpoint_address
     filename    = "${var.certificate_path}/endpoint.txt"
+}
+
+resource "null_resource" "this" {
+  provisioner "local-exec" {
+    command = "curl -o ${var.certificate_path}/AmazonRootCA1.pem https://www.amazontrust.com/repository/AmazonRootCA1.pem"
+  }
 }

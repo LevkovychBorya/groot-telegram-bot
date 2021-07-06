@@ -1,1 +1,3 @@
-data "aws_iot_endpoint" "this" {}
+data "aws_iot_endpoint" "this" {
+    endpoint_type = "iot:Data-ATS"
+}
