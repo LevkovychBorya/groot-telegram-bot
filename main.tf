@@ -20,7 +20,7 @@ module "aws_lambda" {
   env        = "prod"
   project    = "grootbot"
 
-  filename   = "lambda_function.zip"
+  filename   = data.archive_file.source.output_path
   timeout    = 15
   source_arn = module.aws_api_gateway.api_gateway_execution_arn
   
@@ -31,6 +31,7 @@ module "aws_lambda" {
     shadow_name    = "GrootShadow"
     serial_number  = "10000000cc67568b"
     authorisedid   = "['380902776', '390672933']"
+    HASH = "${base64sha256(file("source/lambda_function.py"))}-${base64sha256(file("source/requirements.txt"))}"
   }
 
   tags = {
@@ -122,9 +123,14 @@ module "aws_iot" {
 }
 
 # Set webhook for the bot. Whenever there is an update for the bot, it will send an HTTPS POST request to the specified url.
-resource "null_resource" "this" {
+resource "null_resource" "webhook" {
   provisioner "local-exec" {
     command = "curl --silent https://api.telegram.org/bot${data.aws_secretsmanager_secret_version.token.secret_string}/setWebhook?url=${module.aws_api_gateway.invoke_url}"
   }
 }
 
+resource "null_resource" "zip" {
+  triggers = {
+    source = "source"
+  }
+}

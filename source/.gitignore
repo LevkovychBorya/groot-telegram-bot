@@ -1,0 +1,7 @@
+# Ignore everything:
+*
+
+# Except for lambda functions codes:
+!lambda_function.py
+!requirements.txt
+!.gitignore
