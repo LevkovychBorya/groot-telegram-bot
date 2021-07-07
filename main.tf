@@ -129,8 +129,13 @@ resource "null_resource" "webhook" {
   }
 }
 
+# Download libraries from requirements.txt and zip it.
 resource "null_resource" "zip" {
   triggers = {
-    source = "source"
+    main         = "./source/main.py"
+    requirements = "./source/requirements.txt"
+  }
+  provisioner "local-exec" {
+    command = "python -m pip install --platform manylinux1_x86_64 --only-binary=:all: --no-binary=:none: -r source/requirements.txt -t source"
   }
 }
