@@ -75,7 +75,7 @@
 
 The overall architecture design and technology stack is shown in the following picture:
 
-![ildasm](https://github.com/LevkovychBorya/groot-telegram-bot/assets/architecture.png)
+![ildasm](https://github.com/LevkovychBorya/groot-telegram-bot/blob/main/assets/architecture.png)
 
 The business domain of the application is e-commerce.
 The core functionality is based on IoT and Cloud Computing.
