@@ -20,9 +20,9 @@ module "aws_lambda" {
   env        = "prod"
   project    = "grootbot"
 
-  filename   = data.archive_file.source.output_path
-  timeout    = 15
-  source_arn = module.aws_api_gateway.api_gateway_execution_arn
+  filename         = data.archive_file.source.output_path
+  timeout          = 15
+  source_arn       = module.aws_api_gateway.api_gateway_execution_arn
   source_code_hash = data.archive_file.source.output_base64sha256
 
   variables  = {
@@ -31,7 +31,7 @@ module "aws_lambda" {
     thing_name     = "${module.aws_iot.thing_name}"
     shadow_name    = "GrootShadow"
     serial_number  = "10000000cc67568b"
-    authorisedid   = "['380902776', '390672933']"
+    authorised_ids = "['380902776', '390672933']"
   }
 
   tags = {

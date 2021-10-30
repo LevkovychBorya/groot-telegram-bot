@@ -1,26 +1,31 @@
+'''Main module.'''
+
 import json
 import os
 import time
+
 import boto3
 from boto3.dynamodb.conditions import Key
+
 import requests
 import pandas
 import matplotlib.pyplot as plt
 
-token         = os.environ['telegram_token']
-serial_number = os.environ['serial_number']
-table_name    = os.environ['table_name']
-thing_name    = os.environ['thing_name']
-shadow_name   = os.environ['shadow_name']
+TELEGRAM_TOKEN = os.environ['telegram_token']
+SERIAL_NUMBER  = os.environ['serial_number']
+TABLE_NAME     = os.environ['table_name']
+THING_NAME     = os.environ['thing_name']
+SHADOW_NAME    = os.environ['shadow_name']
+AUTHORIZED_IDS = os.environ['authorised_ids']
 
 simple_commands = ["/start", "/help", "/getmetrics"]
 switch_commands = ["/light", "/waterpump", "/ventilation"]
 value_commands  = ["/temperaturelimit", "/lightlimit", "/humiditylimit", "/moisturelimit", "/getgraph"]
-authorized_ids  = os.environ['authorisedid']
 
 
 
 def start_command(chat_id):
+    '''Contains /start message'''
     text = """
 Hi, I'm GrootBot, bot created to help you with your IoT devices.
 Especially gardening one ;) Please type /help to see my commands.
@@ -30,6 +35,7 @@ Created by Borys Levkovych @CallMeBober.
     send_message(text, chat_id)
 
 def help_command(chat_id):
+    '''Contains /help message'''
     text = """
 /getmetrics - get data from greenhouse's sensors
 /getgraph      [hours] - get visual data for period of time
@@ -45,9 +51,10 @@ def help_command(chat_id):
     send_message(text, chat_id)
 
 def get_metrics(chat_id):
+    '''Query DynamoDB for the last data that was received'''
     dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table(table_name)
-    kce = Key('SerialNumber').eq(serial_number) & Key('Timestamp').between(0, round(time.time()))
+    table = dynamodb.Table(TABLE_NAME)
+    kce = Key('SerialNumber').eq(SERIAL_NUMBER) & Key('Timestamp').between(0, round(time.time()))
     response = table.query(
         KeyConditionExpression=kce,
         ScanIndexForward = False,
@@ -64,9 +71,11 @@ Light: {item["Light"]} lx
     send_message(text, chat_id)
 
 def get_graph(hours, chat_id):
+    '''Query everything in DynamoDB for a range of time and create a graph from that data'''
     dynamodb = boto3.resource('dynamodb')
-    table = dynamodb.Table(table_name)
-    kce = Key('SerialNumber').eq(serial_number) & Key('Timestamp').between(round(time.time() - int(hours) * 3600), round(time.time()))
+    table = dynamodb.Table(TABLE_NAME)
+    time_range = round(time.time() - int(hours) * 3600)
+    kce = Key('SerialNumber').eq(SERIAL_NUMBER) & Key('Timestamp').between(round(time_range), round(time.time()))
     response = table.query(
         KeyConditionExpression=kce,
         ScanIndexForward = False,
@@ -82,6 +91,7 @@ def get_graph(hours, chat_id):
         send_message("There is no data from sensors for that period of time", chat_id)
 
 def change_thing(thing, argument, chat_id):
+    '''Compare command to a shadow and change it if required'''
     payload = get_shadow()
     reported_state = payload["state"]["reported"][thing]
     desired_state  = payload["state"]["desired"][thing]
@@ -113,16 +123,18 @@ def change_thing(thing, argument, chat_id):
             send_message("The " + thing + " was turned " + argument, chat_id)
 
 def get_shadow():
+    '''Recieve shadow from AWS IoT Thing'''
     client = boto3.client('iot-data')
     response = client.get_thing_shadow(
-        thingName=thing_name,
-        shadowName=shadow_name
+        thingName=THING_NAME,
+        shadowName=SHADOW_NAME
     )
     payload = json.loads(response["payload"].read())
 
     return payload
 
 def update_shadow(thing, argument):
+    '''Change shadow for AWS IoT Thing'''
     payload = {
           'state': {
               'desired': {
@@ -132,13 +144,14 @@ def update_shadow(thing, argument):
       }
     client = boto3.client('iot-data')
     client.update_thing_shadow(
-        thingName=thing_name,
-        shadowName=shadow_name,
+        thingName=THING_NAME,
+        shadowName=SHADOW_NAME,
         payload=json.dumps(payload)
     )
 
 def send_message(text, chat_id):
-    endpoint = "https://api.telegram.org/bot" + token + "/sendMessage"
+    '''Send message back in chat'''
+    endpoint = "https://api.telegram.org/bot" + TELEGRAM_TOKEN + "/sendMessage"
     payload = {
         "chat_id": chat_id,
         "text": text
@@ -146,7 +159,8 @@ def send_message(text, chat_id):
     requests.post(endpoint, data=payload)
 
 def send_photo(chat_id):
-    endpoint = "https://api.telegram.org/bot" + token + "/sendPhoto"
+    '''Send message with a picture'''
+    endpoint = "https://api.telegram.org/bot" + TELEGRAM_TOKEN + "/sendPhoto"
     payload = {
         "chat_id": chat_id
     }
@@ -155,6 +169,7 @@ def send_photo(chat_id):
     return ret.json()
 
 def execute_command(message, chat_id):
+    '''Call upon a function based on command name'''
     command = message[0]
     if command == "/start":
         start_command(chat_id)
@@ -170,6 +185,7 @@ def execute_command(message, chat_id):
         change_thing(command[1:], argument, chat_id)
 
 def check_arguments(message, chat_id):
+    '''Check if arguments are correct'''
     command = message[0]
     if len(message) == 1 and command in simple_commands:
         execute_command(message, chat_id)
@@ -189,6 +205,7 @@ def check_arguments(message, chat_id):
         send_message("Invalid arguments. Try /help", chat_id)
 
 def check_command(message, chat_id):
+    '''Check if command exists in one of the lists'''
     command = message[0]
     if command in simple_commands or switch_commands or value_commands:
         check_arguments(message, chat_id)
@@ -197,6 +214,7 @@ def check_command(message, chat_id):
 
 
 def lambda_handler(event, context):
+    '''Main handler'''
     request_body = json.loads(event['body'])
     if 'message' in request_body:
         chat_id  = request_body['message']['chat']['id']
@@ -207,10 +225,10 @@ def lambda_handler(event, context):
             'statusCode': 200
     }
 
-    if str(user_id) in authorized_ids:
+    if str(user_id) in AUTHORIZED_IDS:
         check_command(message, chat_id)
     else:
-        send_message("You are not authorised to use this bot contact @CallMeBober for more information", chat_id)
+        send_message("You are not authorised to use this bot, contact @CallMeBober for more information", chat_id)
 
     return {
         'statusCode': 200
