@@ -79,7 +79,7 @@ def get_graph(hours, chat_id):
         plt.savefig('/tmp/graph.jpg')
         send_photo(chat_id)
     except Exception as e:
-        send_message("There is no data from sensors for that period of time" + e.message + e.args, chat_id)
+        send_message("There is no data from sensors for that period of time" + str(e.message) + str(e.args), chat_id)
 
 def change_thing(thing, argument, chat_id):
     payload = get_shadow()
