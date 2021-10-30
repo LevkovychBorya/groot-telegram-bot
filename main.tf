@@ -132,7 +132,7 @@ resource "null_resource" "webhook" {
 # Download libraries from requirements.txt and zip it.
 resource "null_resource" "zip" {
   triggers = {
-    main         = "./source/main.py"
+    main         = "./source/lambda_function.py"
     requirements = "./source/requirements.txt"
   }
   provisioner "local-exec" {
