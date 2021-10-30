@@ -3,7 +3,6 @@ import os
 import time
 import boto3
 from boto3.dynamodb.conditions import Key
-
 import requests
 import pandas
 import matplotlib.pyplot as plt
@@ -79,8 +78,8 @@ def get_graph(hours, chat_id):
         data_frame.plot(x="Timestamp", y=["Light", "Temperature", "Humidity", "Moisture"]).set_xlabel("Time")
         plt.savefig('/tmp/graph.jpg')
         send_photo(chat_id)
-    except Exception as e:
-        send_message("There is no data from sensors for that period of time" + str(e.message) + str(e.args), chat_id)
+    except KeyError:
+        send_message("There is no data from sensors for that period of time", chat_id)
 
 def change_thing(thing, argument, chat_id):
     payload = get_shadow()
@@ -199,14 +198,14 @@ def check_command(message, chat_id):
 
 def lambda_handler(event, context):
     request_body = json.loads(event['body'])
-    try:
+    if 'message' in request_body:
         chat_id  = request_body['message']['chat']['id']
         user_id  = request_body['message']['from']['id']
         message  = request_body['message']['text'].split()
-    except:
+    else:
         return {
             'statusCode': 200
-        }
+    }
 
     if str(user_id) in authorized_ids:
         check_command(message, chat_id)

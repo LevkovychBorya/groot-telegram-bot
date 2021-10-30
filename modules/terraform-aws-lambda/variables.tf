@@ -21,6 +21,13 @@ variable "filename" {
   type    = string
   default = "lambda_function.zip"
 }
+
+variable "source_code_hash" {
+  description = "Used to trigger updates. Must be set to a base64-encoded SHA256 hash of the package file."
+  type    = string
+}
+
+
 variable "handler" {
   description = "Function entrypoint in your code."
   type    = string

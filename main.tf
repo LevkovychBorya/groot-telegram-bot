@@ -23,7 +23,8 @@ module "aws_lambda" {
   filename   = data.archive_file.source.output_path
   timeout    = 15
   source_arn = module.aws_api_gateway.api_gateway_execution_arn
-  
+  source_code_hash = data.archive_file.source.output_base64sha256
+
   variables  = {
     telegram_token = "${data.aws_secretsmanager_secret_version.token.secret_string}"
     table_name     = "${module.aws_dynamodb.table_name}"
@@ -31,7 +32,6 @@ module "aws_lambda" {
     shadow_name    = "GrootShadow"
     serial_number  = "10000000cc67568b"
     authorisedid   = "['380902776', '390672933']"
-    HASH = "${base64sha256(file("source/lambda_function.py"))}-${base64sha256(file("source/requirements.txt"))}"
   }
 
   tags = {
@@ -75,7 +75,7 @@ module "aws_dynamodb" {
   write_capacity = 1
   hash_key       = "SerialNumber"
   range_key      = "Timestamp"
-  
+
   attributes = [
     {
       name = "SerialNumber"
@@ -86,10 +86,10 @@ module "aws_dynamodb" {
       type = "N"
     }
   ]
-  
+
   tags = {
     "Owner"  = "blevk"
-  } 
+  }
 }
 
 module "aws_iot" {
@@ -132,8 +132,8 @@ resource "null_resource" "webhook" {
 # Download libraries from requirements.txt and zip it.
 resource "null_resource" "zip" {
   triggers = {
-    main         = "./source/lambda_function.py"
-    requirements = "./source/requirements.txt"
+    main         = "${base64sha256(file("./source/lambda_function.py"))}"
+    requirements = "${base64sha256(file("./source/requirements.txt"))}"
   }
   provisioner "local-exec" {
     command = "python -m pip install --platform manylinux1_x86_64 --only-binary=:all: --no-binary=:none: -r source/requirements.txt -t source"

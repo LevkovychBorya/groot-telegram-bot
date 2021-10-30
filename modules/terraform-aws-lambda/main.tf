@@ -29,7 +29,7 @@ resource "aws_lambda_function" "this" {
   handler       = var.handler
   timeout       = var.timeout
 
-  source_code_hash = filebase64sha256(var.filename)
+  source_code_hash = var.source_code_hash
 
   runtime = var.runtime
 
