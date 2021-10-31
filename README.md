@@ -77,7 +77,7 @@ The overall architecture design and technology stack is shown in the following p
 
 <p align="center">
   <a href="https://github.com/LevkovychBorya/groot-telegram-bot">
-    <img src="assets/architecture.png" alt="Logo" width="640" height="1280">
+    <img src="assets/architecture.png" alt="Logo" width="720" height="1280">
   </a>
 </p>
 
