@@ -57,7 +57,6 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Build and Test</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -110,7 +109,10 @@ Raspberry Pi 4 model B see [Raspberry Pi part](https://github.com/STetiana)
 <!-- GETTING STARTED -->
 ## Getting Started
 
-AWS, Terraform, Python, Telegram
+Create [AWS account](https://aws.amazon.com/account/)
+Create [Telegram account](https://web.telegram.org)
+Install [Terraform](https://www.terraform.io/downloads.html) locally
+Install [Python](https://www.python.org/downloads/release/python-3810/) locally
 
 
 
@@ -156,6 +158,8 @@ In oder to do that copy files from `credentials` folder to your Pi device and us
 
 <!-- ROADMAP -->
 ## Roadmap
+
+- [] Change access for lambda and AWS IoT to least privilege
 
 See the [open issues](https://github.com/LevkovychBorya/groot-telegram-bot/issues) for a list of proposed features (and known issues).
 
