@@ -116,6 +116,10 @@ First of all go and create a Telegram bot using [BotFather](http://t.me/botfathe
   </a>
 </p>
 
+Next go to [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) and create a secret.
+
+Use name `TeleToken` and save your token in plaintext.
+
 To deploy an infrastrucuture go ahead and [export your AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) into the shell:
 
 ```sh
