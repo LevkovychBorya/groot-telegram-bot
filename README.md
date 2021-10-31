@@ -71,7 +71,7 @@
 <!-- ABOUT THE PROJECT -->
 ## Introduction
 
-[![Product Name Screen Shot][product-screenshot]](https://web.telegram.org/#/im?p=@blevkovych_bot)
+[![Product Name Screen Shot][product-screenshot]](http://t.me/blevkovych_bot)
 
 The overall architecture design and technology stack is shown in the following picture:
 
