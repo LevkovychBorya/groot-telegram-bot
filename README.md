@@ -125,7 +125,7 @@ Install [Python](https://www.python.org/downloads/release/python-3810/) locally
 
 ### Installation
 
-1. First of all go and create a Telegram bot using [BotFather](http://t.me/botfather)
+1. Create a Telegram bot using [BotFather](http://t.me/botfather)
 
 <p align="center">
   <a href="https://github.com/LevkovychBorya/groot-telegram-bot">
@@ -133,11 +133,11 @@ Install [Python](https://www.python.org/downloads/release/python-3810/) locally
   </a>
 </p>
 
-Next go to [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) and create a secret.
+2. Go to [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) and create a secret.
 
 Use name `TeleToken` and save your token in plaintext.
 
-2. Go ahead and [export your AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) into the shell:
+3. [Export your AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) into the shell:
 
 ```sh
 export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
