@@ -1,7 +1,3 @@
-!!! This project's code need to be refactored, README fixed and policies needs to be updated with appropriate access levels.
-
-
-
 <!-- PROJECT SHIELDS -->
 <!--
 *** I'm using markdown "reference style" links for readability.
@@ -29,7 +25,7 @@
   <h3 align="center">GrootBot</h3>
 
   <p align="center">
-    Telegram bot to help you control smart greenhouse.
+    Telegram bot to help you control your smart greenhouse.
     <br />
     <a href="https://github.com/LevkovychBorya/groot-telegram-bot"><strong>Explore the docs »</strong></a>
     <br />
@@ -75,40 +71,37 @@
 <!-- ABOUT THE PROJECT -->
 ## Introduction
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Product Name Screen Shot][product-screenshot]](https://web.telegram.org/#/im?p=@blevkovych_bot)
 
 The overall architecture design and technology stack is shown in the following picture:
 
 <p align="center">
   <a href="https://github.com/LevkovychBorya/groot-telegram-bot">
-    <img src="assets/architecture.png" alt="Logo">
+    <img src="assets/architecture.png" alt="Logo" width="640" height="1280">
   </a>
 </p>
 
-The business domain of the application is e-commerce.
+The business domain of the application is agriculture.
 The core functionality is based on IoT and Cloud Computing.
 
 A list of commonly used resources that I find helpful are listed in the acknowledgements.
 
 ### Built With
 
-Following Terraform modules:
+Following AWS services:
 
  - AWS Lambda 
  - AWS API Gateway
  - AWS DynamoDB
  - AWS IoT
 
-Telegram bot written in Python.
+Telegram bot written in Python 3.8.
 
-Raspberry Pi model B see [Raspberry Pi part](https://github.com/STetiana)
+Raspberry Pi 4 model B see [Raspberry Pi part](https://github.com/STetiana)
 
-This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 * [Terraform](https://www.terraform.io)
 * [Python](https://www.python.org)
 * [AWS](https://aws.amazon.com)
-
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
@@ -198,4 +191,4 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 [license-url]: https://github.com/LevkovychBorya/groot-telegram-bot/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/boryslevkovych/
-[product-screenshot]: assets/screenshot.png
+[product-screenshot]: assets/priduct-screenshot.png
