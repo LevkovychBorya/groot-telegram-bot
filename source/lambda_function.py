@@ -207,7 +207,7 @@ def check_arguments(message, chat_id):
 def check_command(message, chat_id):
     '''Check if command exists in one of the lists'''
     command = message[0]
-    if command in simple_commands or switch_commands or value_commands:
+    if command in (simple_commands or switch_commands or value_commands):
         check_arguments(message, chat_id)
     else:
         send_message("The command: \"" + command + "\" is unknown. Try /help", chat_id)
