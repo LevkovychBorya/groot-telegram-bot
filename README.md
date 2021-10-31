@@ -86,6 +86,8 @@ The core functionality is based on IoT and Cloud Computing.
 
 A list of commonly used resources that I find helpful are listed in the acknowledgements.
 
+
+
 ### Built With
 
 Following AWS services:
@@ -103,12 +105,25 @@ Raspberry Pi 4 model B see [Raspberry Pi part](https://github.com/STetiana)
 * [Python](https://www.python.org)
 * [AWS](https://aws.amazon.com)
 
+
+
 <!-- GETTING STARTED -->
 ## Getting Started
 
-I'm assuming that you already have an AWS, Telegram account and installed Terraform, Python on your local machine.
+AWS, Terraform, Python, Telegram
 
-First of all go and create a Telegram bot using [BotFather](http://t.me/botfather)
+
+
+### Prerequisites
+
+ - Python version: 3.8.10
+ - Terraform version: 1.0.0
+
+
+
+### Installation
+
+1. First of all go and create a Telegram bot using [BotFather](http://t.me/botfather)
 
 <p align="center">
   <a href="https://github.com/LevkovychBorya/groot-telegram-bot">
@@ -120,9 +135,7 @@ Next go to [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) and cr
 
 Use name `TeleToken` and save your token in plaintext.
 
-Now you're ready to deploy the infrastrucuture:
-
-Go ahead and [export your AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) into the shell:
+2. Go ahead and [export your AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) into the shell:
 
 ```sh
 export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
@@ -139,32 +152,7 @@ terraform apply
 ```
 
 That's it. To completely finish this setup ypu need to connect your Raspberry Pi to AWS IoT service.
-In oder to do that copy files from `credentials` folder to your Pi device and use them in a [script](https://github.com/STetiana) to connect.
-
-### Prerequisites
-
- - Python version: 3.8.10
- - Terraform version: 1.0.0
-
-### Installation
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/LevkovychBorya/groot-telegram-bot.git
-   ```
-UPDATE !!!
-
-
-
-<!-- USAGE EXAMPLES -->
-## Build and Test
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-
+In oder to do that copy files from `credentials` folder to your Pi device and use them in a [script](https://github.com/STetiana) for connection.
 
 <!-- ROADMAP -->
 ## Roadmap
