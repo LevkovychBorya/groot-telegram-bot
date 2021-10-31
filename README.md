@@ -110,7 +110,11 @@ I'm assuming that you already have an AWS, Telegram account and installed Terraf
 
 First of all go and create a Telegram bot using [BotFather](http://t.me/botfather)
 
-[Create a bot][botfather]
+<p align="center">
+  <a href="https://github.com/LevkovychBorya/groot-telegram-bot">
+    <img src="assets/botfather.png" alt="Logo">
+  </a>
+</p>
 
 To deploy an infrastrucuture go ahead and [export your AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) into the shell:
 
