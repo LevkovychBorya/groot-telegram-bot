@@ -191,4 +191,4 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 [license-url]: https://github.com/LevkovychBorya/groot-telegram-bot/blob/main/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/boryslevkovych/
-[product-screenshot]: assets/priduct-screenshot.png
+[product-screenshot]: assets/product-screenshot.png
