@@ -120,7 +120,9 @@ Next go to [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) and cr
 
 Use name `TeleToken` and save your token in plaintext.
 
-To deploy an infrastrucuture go ahead and [export your AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) into the shell:
+Now you're ready to deploy the infrastrucuture:
+
+Go ahead and [export your AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) into the shell:
 
 ```sh
 export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
@@ -128,7 +130,16 @@ export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 export AWS_DEFAULT_REGION=us-west-2
 ```
 
+After that run:
 
+```sh
+terraform init
+terraform plan
+terraform apply
+```
+
+That's it. To completely finish this setup ypu need to connect your Raspberry Pi to AWS IoT service.
+In oder to do that copy files from `credentials` folder to your Pi device and use them in a [script](https://github.com/STetiana) to connect.
 
 ### Prerequisites
 
