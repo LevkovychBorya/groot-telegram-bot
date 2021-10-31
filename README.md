@@ -109,10 +109,10 @@ Raspberry Pi 4 model B see [Raspberry Pi part](https://github.com/STetiana)
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Create [AWS account](https://aws.amazon.com/account/)
-Create [Telegram account](https://web.telegram.org)
-Install [Terraform](https://www.terraform.io/downloads.html) locally
-Install [Python](https://www.python.org/downloads/release/python-3810/) locally
+* Create [AWS account](https://aws.amazon.com/account/)
+* Create [Telegram account](https://web.telegram.org)
+* Install [Terraform](https://www.terraform.io/downloads.html) locally
+* Install [Python](https://www.python.org/downloads/release/python-3810/) locally
 
 
 
