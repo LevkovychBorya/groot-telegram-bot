@@ -106,8 +106,21 @@ Raspberry Pi 4 model B see [Raspberry Pi part](https://github.com/STetiana)
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+I'm assuming that you already have an AWS, Telegram account and installed Terraform, Python on your local machine.
+
+First of all go and create a Telegram bot using [BotFather](http://t.me/botfather)
+
+[![Create a bot][botfather]]
+
+To deploy an infrastrucuture go ahead and [export your AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html) into the shell:
+
+```sh
+export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+export AWS_DEFAULT_REGION=us-west-2
+```
+
+
 
 ### Prerequisites
 
@@ -119,7 +132,7 @@ To get a local copy up and running follow these simple example steps.
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/LevkovychBorya/groot-telegram-bot.git
    ```
 UPDATE !!!
 
@@ -192,3 +205,4 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/yo
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/boryslevkovych/
 [product-screenshot]: assets/product-screenshot.png
+[botfather]: assets/botfather.png
